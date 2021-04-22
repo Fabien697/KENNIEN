@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  pre_build:
+    on-failure: ABORT | CONTINUE
+    commands:
+      - cp .env.example .env
+
+  build:
+    on-failure: ABORT | CONTINUE
+    commands:
+      - composer install
+      - php artisan key:generate
+      - ./vendor/bin/phpunit tests/Unit
+
+artifacts:
+  files:
+    - ./**/*
